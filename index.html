@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EYVER GÓMEZ</title>
+<meta name="description" content="Eyver Gómez — Design-driven software engineer. Frontend, automation and data. Santa Rosa de Osos, Colombia.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="EYVER GÓMEZ">
+<meta property="og:description" content="Design-driven software engineer. Frontend, automation and data.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,800&family=Chivo+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2e2e30;
+    --logo: #1d1d1f;
+    --accent: #ff2400;
+    --muted: #8a8a8e;
+    --panel: #f5f5f5;
+    --line: #e6e6e6;
+    --bg: #ffffff;
+    --mono: "Chivo Mono", "ABC Monument Grotesk Mono", ui-monospace, monospace;
+    --display: "Archivo", "Arial Narrow", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 12px/1.5 var(--mono);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  :focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+
+  /* Idioma: cada texto existe en ES y EN */
+  html[lang="es"] .en, html[lang="en"] .es { display: none !important; }
+
+  /* ---------- Cabecera ---------- */
+  .header { padding: 20px 20px 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .logo {
+    display: block;
+    font-family: var(--display);
+    font-stretch: 62%;
+    font-variation-settings: "wdth" 62;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: .82;
+    letter-spacing: -.035em;
+    color: var(--logo);
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+  .meta { display: flex; gap: 18px; align-items: center; text-transform: uppercase; padding-top: 6px; }
+  .meta .clock { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lang button { padding: 2px 0; }
+  .lang button + button { margin-left: 8px; }
+  .lang button[aria-pressed="true"] { font-weight: 700; }
+  .lang button[aria-pressed="false"] { color: var(--muted); }
+
+  .nav { display: flex; flex-wrap: wrap; gap: 6px 25px; padding: 30px 20px 0; text-transform: uppercase; }
+  .nav a { transition: opacity .2s; }
+  .nav a:hover { opacity: .55; }
+  .nav a.is-active { font-weight: 700; }
+  .nav a.hot { color: var(--accent); font-weight: 700; }
+  .nav a.hot::before {
+    content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); margin-right: 7px; vertical-align: 1px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { opacity: .25; } }
+
+  /* ---------- Filas desplegables ---------- */
+  main { flex: 1; }
+  .collapses { max-width: 620px; margin: 0 auto; padding: 38px 20px 24px; }
+  .item { scroll-margin-top: 24px; }
+  .row {
+    width: 100%;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    padding: 12px 0 20px;
+    font-weight: 700; text-transform: uppercase; text-align: left; line-height: 1.15;
+  }
+  .row .title { display: flex; gap: 4px; flex-wrap: wrap; }
+  .row .tag { text-align: right; flex: 1; min-width: 0; }
+  .row .title, .row .tag { transition: color .2s; }
+  .row:hover .title, .row[aria-expanded="true"] .title { color: var(--accent); }
+
+  .panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.65,0,.35,1); }
+  .panel > .inner { overflow: hidden; min-height: 0; }
+  .item.open .panel { grid-template-rows: 1fr; }
+  .body { padding: 0 0 36px; }
+
+  .text p { margin-bottom: 16px; text-align: justify; hyphens: auto; }
+  .text p:last-child { margin-bottom: 0; }
+  .text strong { font-weight: 700; }
+
+  /* Carrusel (como las series) */
+  .slider { position: relative; height: 300px; background: var(--panel); border-radius: 4px; overflow: hidden; margin-bottom: 14px; }
+  .track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; scroll-behavior: smooth; }
+  .track::-webkit-scrollbar { display: none; }
+  .slide { flex: 0 0 100%; height: 100%; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; }
+  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .slide.contain { background: #ececec; }
+  .slide.contain img { object-fit: contain; padding: 18px 18px 44px; cursor: zoom-in; }
+  .nav-btns { position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; z-index: 2; }
+  .nav-btns button { width: 30px; height: 30px; font-size: 18px; font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center; }
+  .nav-btns button:hover { opacity: .6; }
+  .count { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 46px; text-align: center; }
+
+  .ghost {
+    height: 100%; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;
+    font-family: var(--display); font-variation-settings: "wdth" 62; font-weight: 800;
+    font-size: clamp(44px, 12vw, 76px); line-height: .85; text-transform: uppercase; letter-spacing: -.03em;
+    color: transparent; -webkit-text-stroke: 1px var(--ink); text-align: center;
+  }
+  .ghost small { font: 700 12px var(--mono); -webkit-text-stroke: 0; color: var(--ink); letter-spacing: 0; }
+
+  /* Datos y listas */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 4px 0 18px; }
+  .stats div { padding: 14px 0; text-transform: uppercase; }
+  .stats div + div { padding-left: 12px; border-left: 1px solid var(--line); }
+  .stats b { display: block; font-family: var(--display); font-variation-settings: "wdth" 62; font-weight: 800; font-size: 44px; line-height: .9; letter-spacing: -.02em; color: var(--logo); margin-bottom: 6px; }
+
+  .list { list-style: none; border-top: 1px solid var(--line); }
+  .list li { padding: 14px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 130px 1fr; gap: 4px 16px; }
+  .list .when { font-weight: 700; text-transform: uppercase; }
+  .list h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; }
+  .list .where { color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .list p { text-align: justify; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chips span { border: 1px solid var(--ink); border-radius: 2px; padding: 1px 6px; text-transform: uppercase; font-size: 11px; }
+
+  .links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 18px; text-transform: uppercase; font-weight: 700; }
+  .links a { border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: color .2s; }
+  .links a:hover { color: var(--accent); }
+  .links a.red { color: var(--accent); }
+
+  .cert-caption { display: flex; justify-content: space-between; gap: 16px; text-transform: uppercase; min-height: 18px; }
+  .cert-caption b { font-weight: 700; }
+  .cert-caption span { color: var(--muted); text-align: right; }
+
+  /* Formulario */
+  form { margin-top: 22px; display: grid; border-top: 1px solid var(--ink); }
+  form label { display: block; border-bottom: 1px solid var(--line); }
+  form label span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  form input, form textarea {
+    width: 100%; border: 0; background: none; color: var(--ink); font: 700 12px var(--mono);
+    text-transform: uppercase; padding: 14px 0; resize: vertical; outline: none;
+  }
+  form textarea { min-height: 110px; text-transform: none; font-weight: 400; }
+  form input::placeholder, form textarea::placeholder { color: var(--muted); text-transform: uppercase; font-weight: 700; }
+  form button {
+    margin-top: 16px; justify-self: start; background: var(--ink); color: #fff; font-weight: 700;
+    text-transform: uppercase; padding: 11px 18px; border-radius: 2px; transition: background .2s;
+  }
+  form button:hover { background: var(--accent); }
+
+  /* Cinta inferior */
+  .marquee { overflow: hidden; white-space: nowrap; padding: 40px 0 0; pointer-events: none; user-select: none; }
+  .marquee div { display: inline-block; animation: slide 40s linear infinite; }
+  .marquee span {
+    font-family: var(--display); font-variation-settings: "wdth" 62; font-weight: 800; font-size: clamp(56px, 11vw, 140px);
+    line-height: .9; text-transform: uppercase; letter-spacing: -.03em; color: transparent; -webkit-text-stroke: 1px #d2d2d4; padding-right: 40px;
+  }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  .footer { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 56px; padding: 26px 20px 24px; }
+  .footer a { font-size: 8px; font-weight: 700; line-height: 8px; letter-spacing: .02em; text-transform: uppercase; transition: color .2s; }
+  .footer a:hover { color: var(--accent); }
+
+  /* Visor de certificados */
+  dialog { border: 0; padding: 0; background: transparent; max-width: 92vw; max-height: 90vh; margin: auto; }
+  dialog::backdrop { background: rgba(255,255,255,.94); }
+  dialog img { max-width: 92vw; max-height: 82vh; display: block; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+  dialog .close { display: block; margin: 0 0 10px auto; font-weight: 700; text-transform: uppercase; }
+
+  /* Visor del CV dentro de la página */
+  dialog.cv { width: min(860px, 94vw); height: 90vh; max-height: none; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; }
+  dialog.cv[open] { display: flex; flex-direction: column; }
+  .cv-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 14px; text-transform: uppercase; border-bottom: 1px solid var(--line); }
+  .cv-bar > span { display: flex; gap: 20px; align-items: center; font-weight: 700; }
+  .cv-bar a { color: var(--accent); }
+  .cv-bar .close { margin: 0; }
+  dialog.cv iframe { flex: 1; width: 100%; border: 0; background: var(--panel); }
+
+  .slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .form-status { margin-top: 12px; text-transform: uppercase; font-weight: 700; min-height: 18px; }
+  .form-status.ok { color: var(--ink); }
+  .form-status.err { color: var(--accent); }
+  form button[disabled] { opacity: .5; cursor: progress; }
+
+  @media (max-width: 768px) {
+    .slider { height: 232px; }
+    .logo { font-size: 34px; }
+    .meta .clock { display: none; }
+    .nav { gap: 6px 20px; }
+    .list li { grid-template-columns: 1fr; }
+    .stats b { font-size: 36px; }
+    .text p, .list p { text-align: left; }
+  }
+  @media (max-width: 420px) {
+    .row { flex-direction: column; gap: 6px; }
+    .row .tag { text-align: left; color: var(--muted); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="#" aria-label="Eyver Gómez">Eyver Gómez</a>
+  <div class="meta">
+    <span class="clock" id="clock">SANTA ROSA DE OSOS —:—</span>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Principal">
+  <a href="#agoge" data-group="work"><span class="es">Trabajos</span><span class="en">Work</span></a>
+  <a href="#about" data-group="profile"><span class="es">Perfil</span><span class="en">Profile</span></a>
+  <a href="#certificates" data-group="archive"><span class="es">Archivo</span><span class="en">Archive</span></a>
+  <a href="#contact" data-group="contact"><span class="es">Contacto</span><span class="en">Contact</span></a>
+  <a class="hot" href="https://cal.com/eyverqt/15min" target="_blank" rel="noopener"><span class="es">Disponible para contratos</span><span class="en">Available for work</span></a>
+</nav>
+
+<main id="main">
+  <section class="collapses">
+
+    <!-- WORK 01 -->
+    <article class="item" id="agoge" data-group="work">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-agoge">
+        <span class="title"><span><span class="es">Trabajo</span><span class="en">Work</span> 01:</span><span>Agoge Systems</span></span>
+        <span class="tag"><span class="es">(La plataforma, 2025)</span><span class="en">(The platform, 2025)</span></span>
+      </button>
+      <div class="panel" id="p-agoge"><div class="inner"><div class="body">
+        <div class="slider"><div class="track">
+          <div class="slide"><video src="assets/agoge.mp4" poster="assets/agoge-poster.jpg" muted loop playsinline preload="none" aria-label="Demo de la plataforma AGOGE"></video></div>
+        </div></div>
+        <div class="text">
+          <p class="es"><strong>Aplicación web.</strong> Plataforma fitness de alto rendimiento. Landing page inmersiva con animaciones de scroll complejas y diseño responsivo premium.</p>
+          <p class="en"><strong>Web application.</strong> High-performance fitness platform. Immersive landing page with complex scroll animations and premium responsive design.</p>
+          <div class="chips"><span>React</span><span>TypeScript</span><span>Tailwind</span><span>Node.js</span></div>
+        </div>
+        <div class="links">
+          <a class="red" href="https://agoge.fit" target="_blank" rel="noopener"><span class="es">Ver proyecto ↗</span><span class="en">View project ↗</span></a>
+          <a href="https://github.com/eyverqt" target="_blank" rel="noopener"><span class="es">Repositorio ↗</span><span class="en">Repository ↗</span></a>
+        </div>
+      </div></div></div>
+    </article>
+
+    <!-- WORK 02 -->
+    <article class="item" id="crawlphantom" data-group="work">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-crawl">
+        <span class="title"><span><span class="es">Trabajo</span><span class="en">Work</span> 02:</span><span>Crawlphantom</span></span>
+        <span class="tag"><span class="es">(El motor, privado)</span><span class="en">(The engine, private)</span></span>
+      </button>
+      <div class="panel" id="p-crawl"><div class="inner"><div class="body">
+        <div class="slider"><div class="ghost">Crawl<br>Phantom<small><span class="es">Repositorio privado</span><span class="en">Private repository</span></small></div></div>
+        <div class="text">
+          <p class="es"><strong>Automatización · Datos.</strong> Motor de web scraping sigiloso. Automatización de navegadores headless, evasión anti-detección y extracción de datos estructurados a gran escala.</p>
+          <p class="en"><strong>Automation · Data.</strong> Stealth web scraping engine. Headless browser automation, anti-detection bypassing and structured data extraction at scale.</p>
+          <div class="chips"><span>Python</span><span>Scrapy</span><span>Playwright</span><span>TypeScript</span></div>
+        </div>
+        <div class="links">
+          <a href="#contact"><span class="es">Pedir una demo</span><span class="en">Request a demo</span></a>
+          <a href="https://github.com/eyverqt" target="_blank" rel="noopener"><span class="es">Más en GitHub ↗</span><span class="en">More on GitHub ↗</span></a>
+        </div>
+      </div></div></div>
+    </article>
+
+    <!-- PROFILE 01 -->
+    <article class="item" id="about" data-group="profile">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-about">
+        <span class="title"><span><span class="es">Perfil</span><span class="en">Profile</span> 01:</span><span><span class="es">Sobre mí</span><span class="en">About me</span></span></span>
+        <span class="tag"><span class="es">(El ingeniero, Colombia)</span><span class="en">(The engineer, Colombia)</span></span>
+      </button>
+      <div class="panel" id="p-about"><div class="inner"><div class="body">
+        <div class="stats">
+          <div><b>2+</b><span class="es">Años de experiencia</span><span class="en">Years of experience</span></div>
+          <div><b>20+</b><span class="es">Proyectos completados</span><span class="en">Projects completed</span></div>
+          <div><b>10+</b><span class="es">Clientes satisfechos</span><span class="en">Satisfied clients</span></div>
+        </div>
+        <div class="text">
+          <p class="es"><strong>Ingeniero de software centrado en el diseño.</strong> Creo experiencias digitales que combinan estética perfecta con ingeniería robusta. Mi experiencia me ha permitido desarrollar fuertes habilidades analíticas, brindando soluciones veloces y efectivas.</p>
+          <p class="en"><strong>Design-driven software engineer.</strong> I craft digital experiences that combine pixel-perfect aesthetics with robust engineering. My experience has allowed me to develop strong analytical skills, providing fast and effective solutions.</p>
+          <p class="es">Soy un desarrollador frontend apasionado por combinar el diseño con la funcionalidad para crear interfaces intuitivas y bellas. Disfruto resolver problemas y busco superar las expectativas en cada proyecto, destacando la importancia de la experiencia y la identidad de marca en cada producto.</p>
+          <p class="en">I am a frontend developer passionate about combining design with functionality to create intuitive and beautiful interfaces. I enjoy solving problems and seek to exceed expectations in every project, emphasizing the importance of experience and brand identity.</p>
+        </div>
+        <div class="links">
+          <a class="es red" href="https://drive.google.com/file/d/1yqWWjbJFkSgBOEUfa4XBf3SYTyyLbjbE/preview" data-cv>Ver currículum</a>
+          <a class="es" href="https://drive.google.com/uc?export=download&amp;id=1yqWWjbJFkSgBOEUfa4XBf3SYTyyLbjbE" download="Eyver-Gomez-CV-ES.pdf">Descargar CV ↓</a>
+          <a class="en red" href="https://drive.google.com/file/d/1oTCl7Uw4Oi6e_rFFbzss9x4ow9QPmfLq/preview" data-cv>View resume</a>
+          <a class="en" href="https://drive.google.com/uc?export=download&amp;id=1oTCl7Uw4Oi6e_rFFbzss9x4ow9QPmfLq" download="Eyver-Gomez-CV-EN.pdf">Download CV ↓</a>
+        </div>
+      </div></div></div>
+    </article>
+
+    <!-- PROFILE 02 -->
+    <article class="item" id="experience" data-group="profile">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-exp">
+        <span class="title"><span><span class="es">Perfil</span><span class="en">Profile</span> 02:</span><span><span class="es">Trayectoria</span><span class="en">Experience</span></span></span>
+        <span class="tag"><span class="es">(El camino, 2022 — hoy)</span><span class="en">(The path, 2022 — now)</span></span>
+      </button>
+      <div class="panel" id="p-exp"><div class="inner"><div class="body">
+        <ul class="list">
+          <li>
+            <span class="when">2025 — <span class="es">Presente</span><span class="en">Present</span></span>
+            <div>
+              <h3><span class="es">Especialista en Front-End &amp; Automatización</span><span class="en">Front-End &amp; Automation Specialist</span></h3>
+              <div class="where">Freelancer.com</div>
+              <p class="es">Desarrollo web basado en datos con scripts de scraping personalizados. Automatización de flujos con LLMs y chatbots inteligentes. Consultoría técnica en estrategias de modernización digital.</p>
+              <p class="en">Data-driven web development with custom scraping scripts. AI &amp; workflow automation embedding LLMs and smart chatbots. Technical consulting for digital modernization strategies.</p>
+            </div>
+          </li>
+          <li>
+            <span class="when">2023 — 2024</span>
+            <div>
+              <h3><span class="es">Especialista en Operaciones Industriales</span><span class="en">Industrial Operations Specialist</span></h3>
+              <div class="where">Setas Colombianas S.A.</div>
+              <p class="es">Optimización de operaciones de llenado de sustrato mediante monitoreo y ajuste fino de maquinaria industrial. Mejora de flujos de producción aplicando estándares rigurosos de control de calidad.</p>
+              <p class="en">Streamlined substrate filling operations by monitoring and fine-tuning industrial machinery. Optimized production workflows enforcing rigorous quality control standards.</p>
+            </div>
+          </li>
+          <li>
+            <span class="when">2022 — 2023</span>
+            <div>
+              <h3><span class="es">Coach &amp; Desarrollador Web</span><span class="en">Coach &amp; Web Developer</span></h3>
+              <div class="where">Agoge Systems</div>
+              <p class="es">Diseño y desarrollo de plataforma fitness con interfaz inmersiva, animaciones de scroll complejas y diseño responsivo premium. Entrenamiento de clientes optimizando Core Web Vitals e infraestructura AWS.</p>
+              <p class="en">Designed and developed the fitness platform with immersive UI, complex scroll animations and premium responsive design. Coached clients while optimizing Core Web Vitals and AWS infrastructure.</p>
+            </div>
+          </li>
+        </ul>
+      </div></div></div>
+    </article>
+
+    <!-- PROFILE 03 -->
+    <article class="item" id="education" data-group="profile">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-edu">
+        <span class="title"><span><span class="es">Perfil</span><span class="en">Profile</span> 03:</span><span><span class="es">Formación</span><span class="en">Education</span></span></span>
+        <span class="tag"><span class="es">(La base, 2023 — 2028)</span><span class="en">(The foundation, 2023 — 2028)</span></span>
+      </button>
+      <div class="panel" id="p-edu"><div class="inner"><div class="body">
+        <ul class="list">
+          <li>
+            <span class="when">2023 — 2028</span>
+            <div>
+              <h3><span class="es">Administración de Empresas (BBA)</span><span class="en">Bachelor of Business Administration (BBA)</span></h3>
+              <div class="where">Católica del Norte Fundación Universitaria</div>
+              <p class="es">Enfoque en finanzas, estrategias de inversión y toma de decisiones basadas en datos.</p>
+              <p class="en">Focus on finance, investment strategies and data-driven decision making.</p>
+            </div>
+          </li>
+          <li>
+            <span class="when">2025</span>
+            <div>
+              <h3><span class="es">Fundamentos de Ciberseguridad</span><span class="en">Cybersecurity Fundamentals</span></h3>
+              <div class="where">Palo Alto Networks Cybersecurity Academy</div>
+              <p class="es">Defensa de redes, protección de entornos digitales y principios de seguridad.</p>
+              <p class="en">Network defense, digital environment protection and security principles.</p>
+            </div>
+          </li>
+        </ul>
+      </div></div></div>
+    </article>
+
+    <!-- PROFILE 04 -->
+    <article class="item" id="skills" data-group="profile">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-skills">
+        <span class="title"><span><span class="es">Perfil</span><span class="en">Profile</span> 04:</span><span><span class="es">Habilidades</span><span class="en">Skills</span></span></span>
+        <span class="tag"><span class="es">(Las herramientas, 4 áreas)</span><span class="en">(The toolset, 4 fields)</span></span>
+      </button>
+      <div class="panel" id="p-skills"><div class="inner"><div class="body">
+        <ul class="list">
+          <li><span class="when">Frontend</span><div><h3><span class="es">Arquitectura Frontend</span><span class="en">Frontend Architecture</span></h3><div class="chips"><span>React 19</span><span>Next.js 15</span><span>TypeScript</span><span>Tailwind CSS</span><span>GSAP</span><span>Framer Motion</span></div></div></li>
+          <li><span class="when">Backend</span><div><h3><span class="es">Backend y Sistemas</span><span class="en">Backend &amp; Systems</span></h3><div class="chips"><span>Node.js</span><span>PHP 8</span><span>MySQL</span><span>PostgreSQL</span><span>REST APIs</span><span>Git/GitHub</span></div></div></li>
+          <li><span class="when"><span class="es">Negocios</span><span class="en">Business</span></span><div><h3><span class="es">Estrategia de Negocios</span><span class="en">Business Strategy</span></h3><div class="chips"><span class="es">Análisis financiero</span><span class="en">Financial analysis</span><span class="es">Gestión de proyectos</span><span class="en">Project management</span><span>Power BI</span><span>SAP ERP</span><span class="es">Gestión de riesgos</span><span class="en">Risk management</span></div></div></li>
+          <li><span class="when"><span class="es">Seguridad</span><span class="en">Security</span></span><div><h3><span class="es">Ciberseguridad</span><span class="en">Cybersecurity</span></h3><div class="chips"><span class="es">Defensa de redes</span><span class="en">Network defense</span><span class="es">Prevención de amenazas</span><span class="en">Threat prevention</span><span class="es">Seguridad de la información</span><span class="en">Information security</span><span>Palo Alto Tech</span></div></div></li>
+        </ul>
+      </div></div></div>
+    </article>
+
+    <!-- ARCHIVE 01 -->
+    <article class="item" id="certificates" data-group="archive">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-certs">
+        <span class="title"><span><span class="es">Archivo</span><span class="en">Archive</span> 01:</span><span><span class="es">Credenciales</span><span class="en">Credentials</span></span></span>
+        <span class="tag"><span class="es">(La prueba, 14)</span><span class="en">(The proof, 14)</span></span>
+      </button>
+      <div class="panel" id="p-certs"><div class="inner"><div class="body">
+        <div class="slider" data-captions><div class="track" id="cert-track"></div></div>
+        <div class="cert-caption" aria-live="polite"><b id="cert-title"></b><span id="cert-issuer"></span></div>
+        <div class="text" style="margin-top:16px">
+          <p class="es">Avales académicos y técnicos que respaldan mi experiencia en ingeniería, ciberseguridad y desarrollo. Toca un certificado para verlo completo.</p>
+          <p class="en">Academic and technical credentials backing my experience in engineering, cybersecurity and development. Tap a certificate to view it in full.</p>
+        </div>
+      </div></div></div>
+    </article>
+
+    <!-- CONTACT 01 -->
+    <article class="item" id="contact" data-group="contact">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-contact">
+        <span class="title"><span><span class="es">Contacto</span><span class="en">Contact</span> 01:</span><span><span class="es">Trabajemos juntos</span><span class="en">Let's work together</span></span></span>
+        <span class="tag"><span class="es">(El siguiente paso, hoy)</span><span class="en">(The next step, now)</span></span>
+      </button>
+      <div class="panel" id="p-contact"><div class="inner"><div class="body">
+        <div class="text">
+          <p class="es">Basado en Santa Rosa de Osos, Colombia. Ingeniería de primer nivel para marcas con visión mundial.</p>
+          <p class="en">Based in Santa Rosa de Osos, Colombia. World-class engineering for brands with global vision.</p>
+        </div>
+        <div class="links">
+          <a href="mailto:eyverqt@gmail.com">eyverqt@gmail.com</a>
+          <a class="red" href="https://wa.me/573127115299" target="_blank" rel="noopener">WhatsApp ↗</a>
+          <a href="https://cal.com/eyverqt/15min" target="_blank" rel="noopener"><span class="es">Agendar llamada ↗</span><span class="en">Book a call ↗</span></a>
+        </div>
+        <form id="contact-form" action="https://formspree.io/f/myeeeyoe" method="POST">
+          <label><span>Proyecto</span><input name="project" required data-ph-es="Nombre de tu proyecto" data-ph-en="Your project name"></label>
+          <label><span>Email</span><input name="email" type="email" required data-ph-es="Tu correo electrónico" data-ph-en="Your email"></label>
+          <label><span>Mensaje</span><textarea name="message" required data-ph-es="Cuéntame los detalles técnicos..." data-ph-en="Tell me the technical details..."></textarea></label>
+          <button type="submit"><span class="es">Enviar mensaje</span><span class="en">Send message</span></button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div></div></div>
+    </article>
+
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div>
+    <span>Engineering digital excellence</span><span>Engineering digital excellence</span>
+  </div></div>
+</main>
+
+<footer class="footer">
+  <a href="https://github.com/eyverqt" target="_blank" rel="noopener">GitHub</a>
+  <a href="https://wa.me/573127115299" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="https://cal.com/eyverqt/15min" target="_blank" rel="noopener">Cal.com</a>
+  <a href="mailto:eyverqt@gmail.com">Email</a>
+  <a href="#">© 2026 Eyver Gómez</a>
+</footer>
+
+<dialog id="viewer">
+  <button class="close" type="button"><span class="es">Cerrar ✕</span><span class="en">Close ✕</span></button>
+  <img alt="">
+</dialog>
+
+<dialog id="cv-viewer" class="cv">
+  <div class="cv-bar">
+    <b><span class="es">Currículum</span><span class="en">Resume</span></b>
+    <span>
+      <a id="cv-download" href="#" download><span class="es">Descargar ↓</span><span class="en">Download ↓</span></a>
+      <button class="close" type="button"><span class="es">Cerrar ✕</span><span class="en">Close ✕</span></button>
+    </span>
+  </div>
+  <iframe title="CV" src="about:blank" allow="autoplay"></iframe>
+</dialog>
+
+<script>
+(() => {
+  const html = document.documentElement;
+
+  /* ---------- Idioma ---------- */
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+  };
+  const setLang = (lang) => {
+    html.lang = lang;
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    document.querySelectorAll('[data-ph-es]').forEach(el => el.placeholder = el.dataset[lang === 'es' ? 'phEs' : 'phEn']);
+    store.set('lang', lang);
+    renderCaption();
+  };
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+  /* ---------- Reloj de Colombia ---------- */
+  const clock = document.getElementById('clock');
+  const tick = () => {
+    const t = new Intl.DateTimeFormat('es-CO', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Bogota' }).format(new Date());
+    clock.textContent = 'SANTA ROSA DE OSOS ' + t;
+  };
+  tick(); setInterval(tick, 20000);
+
+  /* ---------- Filas desplegables (una abierta a la vez) ---------- */
+  const items = [...document.querySelectorAll('.item')];
+  const navLinks = [...document.querySelectorAll('.nav a[data-group]')];
+  const toggle = (item, { scroll = false } = {}) => {
+    const willOpen = !item.classList.contains('open');
+    items.forEach(it => {
+      const on = it === item && willOpen;
+      it.classList.toggle('open', on);
+      it.querySelector('.row').setAttribute('aria-expanded', String(on));
+      it.querySelectorAll('video').forEach(v => { if (on) v.play().catch(() => {}); else v.pause(); });
+    });
+    navLinks.forEach(a => a.classList.toggle('is-active', willOpen && a.dataset.group === item.dataset.group));
+    history.replaceState(null, '', willOpen ? '#' + item.id : location.pathname);
+    if (willOpen && scroll) setTimeout(() => item.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+  };
+  items.forEach(it => it.querySelector('.row').addEventListener('click', () => toggle(it)));
+
+  const openById = (id) => {
+    const it = document.getElementById(id);
+    if (it && it.classList.contains('item') && !it.classList.contains('open')) toggle(it, { scroll: true });
+  };
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href').slice(1);
+    if (!id) return;
+    e.preventDefault();
+    openById(id);
+  }));
+
+  /* ---------- Certificados ---------- */
+  const certs = [
+    ['cert1_aws_ai', 'AWS AI Practitioner', 'AWS AI Practitioner', 'AWS'],
+    ['cert3_palo_alto_foundation', 'Fundamentos de Ciberseguridad', 'Cybersecurity Foundation', 'Palo Alto Networks'],
+    ['cert13_cyber_palo_alto', 'Elementos de Ciberseguridad', 'Cybersecurity Elements', 'Palo Alto Networks'],
+    ['cert2_python_santander', 'Python Básico', 'Basic Python', 'Santander'],
+    ['cert5_ing_informatica', 'Ingeniería Informática', 'Computer Engineering', 'FUCN'],
+    ['cert4_ingles_fucn', 'Inglés B1', 'English B1', 'FUCN'],
+    ['cert14_seguridad_sena', 'Controles y Seguridad', 'Controls & Security', 'SENA'],
+    ['cert6_adm_financiera', 'Administración Financiera', 'Financial Administration', 'FUCN'],
+    ['cert9_tecnico_adm_fucn', 'Procesos Administrativos', 'Administrative Processes', 'FUCN'],
+    ['cert10_rrhh_sena', 'Recursos Humanos', 'Human Resources', 'SENA'],
+    ['cert7_laboral_setas', 'Certificado Laboral', 'Employment Certificate', 'Setas Colombianas'],
+    ['cert8_bachiller_coltem', 'Bachiller Comercial', 'Commercial High School Diploma', 'COLTEM'],
+    ['cert11_biomecanica_enfaf', 'Biomecánica', 'Biomechanics', 'ENFAF'],
+    ['cert12_nutricion_icen', 'Nutrición Deportiva', 'Sports Nutrition', 'ICEN']
+  ];
+  const certTrack = document.getElementById('cert-track');
+  certTrack.innerHTML = certs.map(([f, , en]) =>
+    `<div class="slide contain"><img src="assets/certs/${f}.png" alt="${en}" loading="lazy" decoding="async"></div>`).join('');
+  let certIndex = 0;
+  function renderCaption() {
+    const c = certs[certIndex];
+    document.getElementById('cert-title').textContent = html.lang === 'es' ? c[1] : c[2];
+    document.getElementById('cert-issuer').textContent = c[3];
+  }
+
+  /* ---------- Carruseles ---------- */
+  document.querySelectorAll('.slider').forEach(slider => {
+    const track = slider.querySelector('.track');
+    if (!track || track.children.length < 2) return;
+    const slides = track.children;
+    const pad = n => String(n).padStart(2, '0');
+    const nav = document.createElement('div');
+    nav.className = 'nav-btns';
+    nav.innerHTML = '<button type="button" aria-label="Anterior">‹</button><span class="count"></span><button type="button" aria-label="Siguiente">›</button>';
+    slider.appendChild(nav);
+    const count = nav.querySelector('.count');
+    const current = () => Math.round(track.scrollLeft / track.clientWidth);
+    const go = i => track.scrollTo({ left: ((i + slides.length) % slides.length) * track.clientWidth });
+    const update = () => {
+      const i = current();
+      count.textContent = `${pad(i + 1)}/${pad(slides.length)}`;
+      if (slider.hasAttribute('data-captions')) { certIndex = i; renderCaption(); }
+    };
+    nav.children[0].addEventListener('click', () => go(current() - 1));
+    nav.children[2].addEventListener('click', () => go(current() + 1));
+    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    slider.tabIndex = 0;
+    slider.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') go(current() + 1);
+      if (e.key === 'ArrowLeft') go(current() - 1);
+    });
+    update();
+  });
+
+  /* ---------- Visor ---------- */
+  const viewer = document.getElementById('viewer');
+  certTrack.addEventListener('click', e => {
+    const img = e.target.closest('img');
+    if (!img || !viewer.showModal) return;
+    viewer.querySelector('img').src = img.src;
+    viewer.querySelector('img').alt = img.alt;
+    viewer.showModal();
+  });
+  viewer.addEventListener('click', e => { if (e.target === viewer || e.target.closest('.close')) viewer.close(); });
+
+  /* ---------- CV: vista previa dentro de la página ---------- */
+  const cvViewer = document.getElementById('cv-viewer');
+  const cvFrame = cvViewer.querySelector('iframe');
+  document.querySelectorAll('a[data-cv]').forEach(a => a.addEventListener('click', e => {
+    if (!cvViewer.showModal) return;
+    e.preventDefault();
+    const id = a.href.match(/\/d\/([^/]+)/)[1];
+    cvFrame.src = a.href;
+    const dl = document.getElementById('cv-download');
+    dl.href = `https://drive.google.com/uc?export=download&id=${id}`;
+    dl.setAttribute('download', `Eyver-Gomez-CV-${html.lang.toUpperCase()}.pdf`);
+    cvViewer.showModal();
+  }));
+  cvViewer.addEventListener('click', e => { if (e.target === cvViewer || e.target.closest('.close')) cvViewer.close(); });
+  cvViewer.addEventListener('close', () => { cvFrame.src = 'about:blank'; });
+
+  /* ---------- Formulario: envío a Formspree sin salir de la página ---------- */
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const msg = {
+    es: { sending: 'Enviando...', ok: '¡Mensaje recibido! Me pondré en contacto contigo a la brevedad.', err: 'No se pudo enviar. Escríbeme a eyverqt@gmail.com' },
+    en: { sending: 'Sending...', ok: 'Message received! I will get back to you shortly.', err: 'Could not send. Write to eyverqt@gmail.com' }
+  };
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const t = msg[html.lang] || msg.en;
+    const data = new FormData(form);
+    data.append('_subject', `${html.lang === 'es' ? 'Proyecto' : 'Project'}: ${data.get('project')}`);
+    const button = form.querySelector('button');
+    button.disabled = true;
+    status.className = 'form-status';
+    status.textContent = t.sending;
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      status.className = 'form-status ok';
+      status.textContent = t.ok;
+    } catch {
+      status.className = 'form-status err';
+      status.textContent = t.err;
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  /* ---------- Inicio ---------- */
+  const saved = store.get('lang');
+  setLang(saved || ((navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en'));
+  if (location.hash) openById(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>
