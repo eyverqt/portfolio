@@ -18,4 +18,4 @@ Para&nbsp;verlo&nbsp;en&nbsp;local,&nbsp;abre&nbsp;index.html.&nbsp;&nbsp;&nbsp;
 
 <br>
 
-<p align="center"><sub><samp><a href="https://github.com/eyverqt"><b>GITHUB</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://cal.com/eyverqt/15min"><b>AGENDAR&nbsp;LLAMADA</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://wa.me/573127115299"><b>WHATSAPP</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:eyverqt@gmail.com"><b>EMAIL</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="LICENSE"><b>LICENCIA</b></a></samp></sub></p>
+<p align="center"><sub><samp><a href="https://eyverqt.netlify.app"><b>VER&nbsp;SITIO</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/eyverqt"><b>GITHUB</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://cal.com/eyverqt/15min"><b>AGENDAR&nbsp;LLAMADA</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://wa.me/573127115299"><b>WHATSAPP</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:eyverqt@gmail.com"><b>EMAIL</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="LICENSE"><b>LICENCIA</b></a></samp></sub></p>
