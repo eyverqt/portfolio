@@ -222,7 +222,7 @@
 <body>
 
 <header class="header">
-  <a class="logo" href="#" aria-label="Eyver Gómez">Eyver Gómez</a>
+  <a class="logo" href="/" aria-label="Eyver Gómez">Eyver Gómez</a>
   <div class="meta">
     <span class="clock" id="clock">SANTA ROSA DE OSOS —:—</span>
     <div class="lang" role="group" aria-label="Idioma / Language">
@@ -233,10 +233,10 @@
 </header>
 
 <nav class="nav" aria-label="Principal">
-  <a href="#agoge" data-group="work"><span class="es">Trabajos</span><span class="en">Work</span></a>
-  <a href="#about" data-group="profile"><span class="es">Perfil</span><span class="en">Profile</span></a>
-  <a href="#certificates" data-group="archive"><span class="es">Archivo</span><span class="en">Archive</span></a>
-  <a href="#contact" data-group="contact"><span class="es">Contacto</span><span class="en">Contact</span></a>
+  <a href="/agoge" data-group="work"><span class="es">Trabajos</span><span class="en">Work</span></a>
+  <a href="/about" data-group="profile"><span class="es">Perfil</span><span class="en">Profile</span></a>
+  <a href="/certificates" data-group="archive"><span class="es">Archivo</span><span class="en">Archive</span></a>
+  <a href="/contact" data-group="contact"><span class="es">Contacto</span><span class="en">Contact</span></a>
   <a class="hot" href="https://cal.com/eyverqt/15min" target="_blank" rel="noopener"><span class="es">Disponible para contratos</span><span class="en">Available for work</span></a>
 </nav>
 
@@ -279,7 +279,7 @@
           <div class="chips"><span>Python</span><span>Scrapy</span><span>Playwright</span><span>TypeScript</span></div>
         </div>
         <div class="links">
-          <a href="#contact"><span class="es">Pedir una demo</span><span class="en">Request a demo</span></a>
+          <a href="/contact"><span class="es">Pedir una demo</span><span class="en">Request a demo</span></a>
           <a href="https://github.com/eyverqt" target="_blank" rel="noopener"><span class="es">Más en GitHub ↗</span><span class="en">More on GitHub ↗</span></a>
         </div>
       </div></div></div>
@@ -475,7 +475,7 @@
   <a href="https://wa.me/573127115299" target="_blank" rel="noopener">WhatsApp</a>
   <a href="https://cal.com/eyverqt/15min" target="_blank" rel="noopener">Cal.com</a>
   <a href="mailto:eyverqt@gmail.com">Email</a>
-  <a href="#">© 2026 Eyver Gómez</a>
+  <a href="/">© 2026 Eyver Gómez</a>
 </footer>
 
 <dialog id="viewer">
@@ -532,20 +532,31 @@
       it.querySelectorAll('video').forEach(v => { if (on) v.play().catch(() => {}); else v.pause(); });
     });
     navLinks.forEach(a => a.classList.toggle('is-active', willOpen && a.dataset.group === item.dataset.group));
-    history.replaceState(null, '', willOpen ? '#' + item.id : location.pathname);
+    setRoute(willOpen ? item.id : '');
     if (willOpen && scroll) setTimeout(() => item.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
   };
   items.forEach(it => it.querySelector('.row').addEventListener('click', () => toggle(it)));
+
+  // URL limpia: eyverqt.netlify.app/plisto (sin #). Abierto como archivo local no se toca la URL.
+  const setRoute = (id) => {
+    if (location.protocol === 'file:') return;
+    history.replaceState(null, '', '/' + id);
+  };
+  const routeId = () => location.protocol === 'file:' ? '' : decodeURIComponent(location.pathname.replace(/^\/+|\/+$/g, ''));
 
   const openById = (id) => {
     const it = document.getElementById(id);
     if (it && it.classList.contains('item') && !it.classList.contains('open')) toggle(it, { scroll: true });
   };
-  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', (e) => {
+  document.querySelectorAll('a[href^="/"]').forEach(a => a.addEventListener('click', (e) => {
     const id = a.getAttribute('href').slice(1);
-    if (!id) return;
     e.preventDefault();
-    openById(id);
+    if (id) return openById(id);
+    // «/»: cierra lo abierto y vuelve arriba
+    const open = items.find(it => it.classList.contains('open'));
+    if (open) toggle(open);
+    setRoute('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }));
 
   /* ---------- Certificados ---------- */
@@ -664,7 +675,9 @@
   /* ---------- Inicio ---------- */
   const saved = store.get('lang');
   setLang(saved || ((navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en'));
-  if (location.hash) openById(location.hash.slice(1));
+  // Enlaces antiguos con # (eyverqt.netlify.app/#plisto) pasan a la ruta limpia
+  const start = location.hash ? location.hash.slice(1) : routeId();
+  if (start) { openById(start); if (location.hash) setRoute(document.getElementById(start)?.classList.contains('item') ? start : ''); }
 })();
 </script>
 </body>

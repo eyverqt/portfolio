@@ -1,0 +1,10 @@
+# URLs limpias: cada sección es una ruta (eyverqt.netlify.app/plisto) que sirve la misma página
+/agoge  /index.html  200
+/crawlphantom  /index.html  200
+/plisto  /index.html  200
+/about  /index.html  200
+/experience  /index.html  200
+/education  /index.html  200
+/skills  /index.html  200
+/certificates  /index.html  200
+/contact  /index.html  200
