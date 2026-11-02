@@ -2,6 +2,12 @@
 /agoge  /index.html  200
 /crawlphantom  /index.html  200
 /plisto  /index.html  200
+/verba  /index.html  200
+/verba/app/transcribir  /verba/app/index.html  200
+/verba/app/biblioteca  /verba/app/index.html  200
+/verba/app/preguntar  /verba/app/index.html  200
+/verba/app/crear  /verba/app/index.html  200
+/verba/app/ajustes  /verba/app/index.html  200
 /about  /index.html  200
 /experience  /index.html  200
 /education  /index.html  200
