@@ -561,7 +561,9 @@ sin preámbulos del tipo "Aquí tienes".`;
 
     async ia() {
       const ia = cfgIA();
-      const locales = await ollamaModelos();
+      // Solo se busca tu Ollama si lo elegiste: probar 127.0.0.1 en cada visita
+      // ensucia la consola y el navegador puede pedir permiso de red local.
+      const locales = ia.proveedor === 'ollama' ? await ollamaModelos() : null;
       return {
         proveedor: ia.proveedor,
         navegador: { webgpu: device === 'webgpu', modelo: ia.modelo_nav, modelos: MODELOS_NAV },
