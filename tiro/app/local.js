@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Verba — modo escritorio
+   Tiro — modo escritorio
 
    Habla con server.py (/api/*). La transcripcion corre en Python con
    faster-whisper troceando por silencios en paralelo, los enlaces se bajan
@@ -59,7 +59,7 @@
 
   const oyentes = [];
 
-  g.VerbaLocal = {
+  g.TiroLocal = {
     modo: 'local',
 
     async probar() {

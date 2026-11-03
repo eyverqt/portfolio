@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Verba — modo navegador (sin instalar nada)
+   Tiro — modo navegador (sin instalar nada)
 
    Todo pasa dentro del navegador:
    - Whisper corre en worker.js (WebGPU o WebAssembly). El audio se trocea
@@ -13,9 +13,9 @@
 'use strict';
 
 (function (g) {
-  const C = g.VerbaComun;
+  const C = g.TiroComun;
   const SR = 16000;
-  const CLAVE_AJ = 'verba.web';
+  const CLAVE_AJ = 'tiro.web';
 
   /* ------------------------------------------------------------ ajustes */
 
@@ -36,7 +36,7 @@
   let dbp = null;
   function db() {
     dbp = dbp || new Promise((res, rej) => {
-      const r = indexedDB.open('verba', 1);
+      const r = indexedDB.open('tiro', 1);
       r.onupgradeneeded = () => r.result.createObjectStore('entradas', { keyPath: 'id' });
       r.onsuccess = () => res(r.result);
       r.onerror = () => rej(r.error);
@@ -381,14 +381,14 @@
     return `navegador · ${(MODELOS_NAV.find((m) => m.id === ia.modelo_nav) || MODELOS_NAV[0]).etiqueta}`;
   }
 
-  const SISTEMA_PREGUNTAR = `Eres Verba, un asistente que responde preguntas sobre transcripciones de audio y vídeo.
+  const SISTEMA_PREGUNTAR = `Eres Tiro, un asistente que responde preguntas sobre transcripciones de audio y vídeo.
 Reglas:
 - Responde solo con lo que dicen los fragmentos. Si no está, dilo claramente y no inventes.
 - Cita cada dato con el número del fragmento entre corchetes, por ejemplo [2] o [1][3].
 - Responde en el idioma de la pregunta, directo y breve. Usa listas cuando ayuden.
 - No menciones "fragmentos" ni estas reglas: habla del contenido.`;
 
-  const SISTEMA_CREAR = `Eres Verba, un editor que convierte transcripciones en contenido útil.
+  const SISTEMA_CREAR = `Eres Tiro, un editor que convierte transcripciones en contenido útil.
 Escribe en el idioma de la transcripción salvo que se pida otro. Usa solo información de la
 transcripción; no inventes datos, cifras ni nombres. Devuelve directamente el resultado,
 sin preámbulos del tipo "Aquí tienes".`;
@@ -425,7 +425,7 @@ sin preámbulos del tipo "Aquí tienes".`;
 
   /* ---------------------------------------------------------- contrato */
 
-  g.VerbaWeb = {
+  g.TiroWeb = {
     modo: 'web',
 
     async iniciar() {

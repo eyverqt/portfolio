@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Verba — piezas comunes del modo navegador
+   Tiro — piezas comunes del modo navegador
 
    Los mismos formatos de salida que motor.py y la misma busqueda BM25 que
    biblioteca.py, en JavaScript, para que la version web funcione sin
@@ -136,5 +136,5 @@ you your we they he she his her its our their them what which who will would can
     return `${d.getFullYear()}-${dos(d.getMonth() + 1)}-${dos(d.getDate())}T${dos(d.getHours())}:${dos(d.getMinutes())}:${dos(d.getSeconds())}`;
   }
 
-  g.VerbaComun = { reloj, FORMATOS, formatear, fichas, fragmentar, Indice, textoPlano, resumen, ahoraIso };
+  g.TiroComun = { reloj, FORMATOS, formatear, fichas, fragmentar, Indice, textoPlano, resumen, ahoraIso };
 })(typeof window !== 'undefined' ? window : self);

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Verba — Whisper dentro del navegador (worker)
+   Tiro — Whisper dentro del navegador (worker)
 
    Corre en un hilo aparte para que la pagina no se congele. Usa
    transformers.js: WebGPU si la tarjeta lo permite, y si no WebAssembly en

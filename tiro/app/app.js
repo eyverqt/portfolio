@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Verba — interfaz
+   Tiro — interfaz
 
    Una sola interfaz para los dos modos. Al arrancar prueba si hay un
    server.py detras (modo escritorio, local.js); si no, todo corre en el
@@ -12,14 +12,14 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const E = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-let V = null;                                   // VerbaLocal o VerbaWeb
+let V = null;                                   // TiroLocal o TiroWeb
 const BASE = new URL(document.baseURI).pathname.replace(/\/$/, '');
 const PAGINAS = ['transcribir', 'biblioteca', 'preguntar', 'crear', 'ajustes'];
 const TITULOS = { transcribir: 'Transcribir', biblioteca: 'Biblioteca', preguntar: 'Preguntar', crear: 'Crear', ajustes: 'Ajustes' };
 const ORIGEN = { archivo: 'Archivo', enlace: 'Enlace', dictado: 'Dictado' };
 const ETIQUETAS = { subiendo: 'Subiendo', descargando: 'Bajando', en_cola: 'En cola', trabajando: 'Transcribiendo', listo: 'Listo ✓', error: 'Error', cancelado: 'Cancelado' };
 const MESES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
-const ESCRITORIO = 'https://eyverqt.netlify.app/verba';
+const ESCRITORIO = 'https://eyverqt.netlify.app/tiro';
 
 const est = {
   cfg: null, pagina: 'transcribir',
@@ -32,7 +32,7 @@ const est = {
 
 /* ------------------------------------------------------------- opciones */
 
-const CLAVE_OPC = 'verba.opciones';
+const CLAVE_OPC = 'tiro.opciones';
 const opc = Object.assign({ idioma: '', modelo: '', fiel: 'true', workers: '0', formato: 'txt', alcance: 'todo' },
   (() => { try { return JSON.parse(localStorage.getItem(CLAVE_OPC) || '{}'); } catch (e) { return {}; } })());
 function guardarOpc() {
@@ -157,7 +157,7 @@ function ir(p, empujar = true) {
 /* =============================================================== ARRANQUE */
 
 async function arrancar() {
-  V = (await VerbaLocal.probar()) ? VerbaLocal : VerbaWeb;
+  V = (await TiroLocal.probar()) ? TiroLocal : TiroWeb;
   document.body.dataset.modo = V.modo;
   try {
     est.cfg = await V.iniciar();
@@ -350,7 +350,7 @@ function refrescarGlobal() {
     live.className = nube ? 'muted' : 'hot';
     live.textContent = V && V.modo === 'web' ? (nube ? 'En tu navegador · IA en la nube' : 'En tu navegador') : (nube ? 'Local · IA en la nube' : '100% local');
   }
-  document.title = enMarcha ? `${Math.round(p * 100)}% · Verba` : 'Verba';
+  document.title = enMarcha ? `${Math.round(p * 100)}% · Tiro` : 'Tiro';
 }
 
 async function quitar(id) {
@@ -387,7 +387,7 @@ function pintarSalida(id) {
   est.segNodos = [];
   const t = id ? est.trabajos.get(id) : null;
   if (!t) {
-    caja.innerHTML = '<div class="ghost vacio-g">Verba<small>El texto aparece aquí mientras el modelo escucha</small></div>';
+    caja.innerHTML = '<div class="ghost vacio-g">Tiro<small>El texto aparece aquí mientras el modelo escucha</small></div>';
     $('#salidaTitulo').textContent = '04 · Texto en vivo';
     $('#salidaTag').textContent = '';
     actualizarPie(null);
@@ -773,7 +773,7 @@ function pintarChat() {
   }
   caja.innerHTML = est.chat.map((m, i) => (m.role === 'user'
     ? `<div class="msg yo"><span class="who">Tú</span><p>${E(m.content)}</p></div>`
-    : `<div class="msg ia${m.error ? ' err' : ''}" data-m="${i}"><span class="who${m.vivo ? ' vivo' : ''}">${E(m.vivo ? m.fase || 'Pensando' : `Verba${m.modelo ? ` · ${m.modelo}` : ''}`)}</span><div class="md${m.vivo ? ' cursor' : ''}">${m.error ? E(m.error) : md(m.content)}</div>${fuentesHtml(m)}</div>`)).join('');
+    : `<div class="msg ia${m.error ? ' err' : ''}" data-m="${i}"><span class="who${m.vivo ? ' vivo' : ''}">${E(m.vivo ? m.fase || 'Pensando' : `Tiro${m.modelo ? ` · ${m.modelo}` : ''}`)}</span><div class="md${m.vivo ? ' cursor' : ''}">${m.error ? E(m.error) : md(m.content)}</div>${fuentesHtml(m)}</div>`)).join('');
   caja.scrollTop = caja.scrollHeight;
 }
 
@@ -924,7 +924,7 @@ function pintarIA() {
   $('#claveClaude').placeholder = ia.claude.configurado ? 'Clave guardada ✓ · escribe otra para cambiarla' : 'Clave de la API de Claude (sk-ant-…)';
   $('#notaClaude').textContent = V.modo === 'web'
     ? 'Solo para preguntar y crear: el audio se transcribe siempre en tu navegador. La clave se queda en este navegador y va directa a Anthropic.'
-    : 'Solo para preguntar y crear: el audio se transcribe siempre en local. La clave se guarda en Documents\\Verba, fuera del proyecto.';
+    : 'Solo para preguntar y crear: el audio se transcribe siempre en local. La clave se guarda en Documents\\Tiro, fuera del proyecto.';
 }
 
 async function cambiarIA(cambios) {
@@ -934,7 +934,7 @@ async function cambiarIA(cambios) {
 }
 
 const VS = [
-  ['Verba', 'En tu equipo o en tu navegador. <em>Sin minutos contados, sin cuentas, sin subir tu audio.</em> Archivos, enlaces y dictado en una cola; luego preguntas con citas al minuto y creas guías, capítulos o reels. Gratis y de código abierto.', true],
+  ['Tiro', 'En tu equipo o en tu navegador. <em>Sin minutos contados, sin cuentas, sin subir tu audio.</em> Archivos, enlaces y dictado en una cola; luego preguntas con citas al minuto y creas guías, capítulos o reels. Gratis y de código abierto.', true],
   ['TurboScribe', 'En la nube. Gratis: 3 archivos al día de hasta 30 min; lo ilimitado cuesta unos 10 USD al mes. <em>Tu audio se sube a sus servidores.</em>'],
   ['Otter.ai', 'En la nube y pensado para reuniones. Gratis: 300 min al mes y 30 min por conversación. <em>No convierte el texto en guías, capítulos ni reels.</em>'],
   ['MacWhisper', 'Local y muy bueno, pero <em>solo en Mac</em> y con licencia de pago. Nada para Windows ni para el navegador.'],
@@ -1056,7 +1056,7 @@ function enganchar() {
     const r = est.lib.find((x) => x.id === est.crearSel);
     const tipo = est.cfg.tipos.find((t) => t.clave === est.crearTipo);
     try {
-      const d = await V.escribir(`${r ? r.nombre : 'verba'} - ${tipo.etiqueta}`, est.crearTexto, '.md', $('#carpeta').value);
+      const d = await V.escribir(`${r ? r.nombre : 'tiro'} - ${tipo.etiqueta}`, est.crearTexto, '.md', $('#carpeta').value);
       toast(d.ruta ? `Guardado · ${d.ruta.split(/[\\/]/).pop()}` : 'Descargado');
     } catch (e) { toast(e.message, true); }
   });
