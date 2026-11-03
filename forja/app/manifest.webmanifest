@@ -1,0 +1,12 @@
+{
+  "name": "Forja · Fuerza con método",
+  "short_name": "Forja",
+  "description": "Coaching de fuerza y nutrición: tu plan, tus series y tu entrenador en el bolsillo.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f7f8",
+  "theme_color": "#7c3aed",
+  "lang": "es",
+  "icons": [{ "src": "icono.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Forja: coaching de fuerza y nutrición. Programación, registro de series, plan nutricional, herramientas y chat con tu entrenador, en todos tus dispositivos.">
+  <meta name="theme-color" content="#f7f7f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Forja">
+  <title>Forja · Fuerza con método</title>
+  <link rel="icon" type="image/svg+xml" href="/forja/app/icono.svg">
+  <link rel="manifest" href="/forja/app/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    // Tema antes del primer pintado: sin parpadeo. "sistema" sigue al dispositivo.
+    try {
+      var p = JSON.parse(localStorage.getItem('forja.pref.v1') || '{}');
+      var t = p.theme === 'dark' || p.theme === 'light' ? p.theme
+        : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = t;
+      if (p.accent && p.accent !== 'violet') document.documentElement.dataset.accent = p.accent;
+    } catch (e) {}
+  </script>
+  <script type="module" crossorigin src="/forja/app/assets/index-B99svUXN.js"></script>
+  <link rel="modulepreload" crossorigin href="/forja/app/assets/rolldown-runtime-DK3Fl9T5.js">
+  <link rel="modulepreload" crossorigin href="/forja/app/assets/firebase-DsR3ZNLT.js">
+  <link rel="modulepreload" crossorigin href="/forja/app/assets/cuenta-CJmt9Vis.js">
+  <link rel="modulepreload" crossorigin href="/forja/app/assets/util-36BuvHa_.js">
+  <link rel="modulepreload" crossorigin href="/forja/app/assets/store-BzdJYG37.js">
+  <link rel="modulepreload" crossorigin href="/forja/app/assets/ui-B1JK03J3.js">
+  <link rel="stylesheet" crossorigin href="/forja/app/assets/index-yE-MEw63.css">
+</head>
+<body>
+  <div id="root">
+    <div class="arranque">
+      <div class="spinner"></div>
+      <div class="arranque-txt">Cargando Forja…</div>
+    </div>
+  </div>
+  <noscript><div style="padding:40px;text-align:center;font-family:system-ui">Forja necesita JavaScript activado.</div></noscript>
+</body>
+</html>
