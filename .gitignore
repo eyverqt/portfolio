@@ -1,0 +1,7 @@
+# Secretos: nunca al repo
+.env
+.env.*
+!.env.example
+tokens*.txt
+*.pem
+*firebase-adminsdk*.json
