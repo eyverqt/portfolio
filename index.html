@@ -9,7 +9,7 @@
 <meta property="og:title" content="EYVER GÓMEZ">
 <meta property="og:description" content="Design-driven software engineer. Frontend, automation and data.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://eyverqt.netlify.app/">
+<meta property="og:url" content="https://eyverqt.github.io/">
 <link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -405,22 +405,22 @@
       </div></div></div>
     </article>
 
-    <article class="item" id="forja" data-group="work">
-      <button class="row" type="button" aria-expanded="false" aria-controls="p-forja">
-        <span class="title"><span><span class="es">Trabajo</span><span class="en">Work</span> 08:</span><span>Forja</span></span>
+    <article class="item" id="hefesto" data-group="work">
+      <button class="row" type="button" aria-expanded="false" aria-controls="p-hefesto">
+        <span class="title"><span><span class="es">Trabajo</span><span class="en">Work</span> 08:</span><span>Hefesto</span></span>
         <span class="tag"><span class="es">(El coaching, privado)</span><span class="en">(The coaching app, private)</span></span>
       </button>
-      <div class="panel" id="p-forja"><div class="inner"><div class="body">
+      <div class="panel" id="p-hefesto"><div class="inner"><div class="body">
         <div class="slider"><div class="track">
-          <div class="slide"><img src="assets/forja-hub.jpg" style="object-position:top" alt="Panel del entrenador de Forja con sus atletas programados" loading="lazy" decoding="async"></div>
+          <div class="slide"><img src="assets/hefesto-hub.jpg" style="object-position:top" alt="Estadísticas de un atleta en Hefesto con fuerza estimada y tonelaje" loading="lazy" decoding="async"></div>
         </div></div>
         <div class="text">
-          <p class="es"><strong>App web · Coaching de fuerza y nutrición.</strong> El entrenador programa a cada atleta desde el primer día, con correo o sin él, y le da acceso en cuanto se registra; el asesorado registra series, RPE, comidas y peso, y el entrenador lo ve al momento. <strong>Novedades 2.3:</strong> registro guiado del entrenador con vista previa en vivo, avisos de quién requiere atención, progresión con un toque, series escritas en una línea (3x5 75% @8) y bloques que se importan y exportan en texto o JSON.</p>
-          <p class="en"><strong>Web app · Strength and nutrition coaching.</strong> The coach programs each athlete from day one, with or without an email, and grants access as soon as they sign up; the client logs sets, RPE, meals and bodyweight, and the coach sees it instantly. <strong>New in 2.3:</strong> guided coach setup with a live preview, alerts for athletes who need attention, one-tap progression, sets written in one line (3x5 75% @8) and blocks imported and exported as text or JSON.</p>
+          <p class="es"><strong>App web · Coaching de fuerza y nutrición.</strong> El entrenador programa a cada atleta, con correo o sin él, y sigue su semana en un cronograma por bloques; el asesorado registra series, RPE, comidas y peso, y envía videos recortados que llegan al chat con el contexto del ejercicio. <strong>Novedades 2.4:</strong> estilo Apple con Liquid Glass, tutoriales por sección, directorio público de entrenadores con mapa, gráficas de fuerza y tonelaje, y barra compartible para historias.</p>
+          <p class="en"><strong>Web app · Strength and nutrition coaching.</strong> The coach programs each athlete, with or without an email, and follows their week on a block timeline; the client logs sets, RPE, meals and bodyweight, and sends trimmed videos that reach the chat with the exercise context. <strong>New in 2.4:</strong> Apple-style Liquid Glass design, per-section tutorials, a public coach directory with a map, strength and tonnage charts, and a shareable loaded bar for stories.</p>
           <div class="chips"><span>JavaScript</span><span>Vite</span><span>Firebase</span><span>Firestore</span><span>PWA</span></div>
         </div>
         <div class="links">
-          <a class="red" href="/forja/app/" target="_blank" rel="noopener"><span class="es">Abrir la app ↗</span><span class="en">Open the app ↗</span></a>
+          <a class="red" href="https://hefestopro.web.app" target="_blank" rel="noopener"><span class="es">Abrir la app ↗</span><span class="en">Open the app ↗</span></a>
           <a href="/contact"><span class="es">Pedir una demo</span><span class="en">Request a demo</span></a>
         </div>
       </div></div></div>
@@ -654,7 +654,7 @@
   };
   items.forEach(it => it.querySelector('.row').addEventListener('click', () => toggle(it)));
 
-  // URL limpia: eyverqt.netlify.app/plisto (sin #). Abierto como archivo local no se toca la URL.
+  // URL limpia: eyverqt.github.io/plisto (sin #). Abierto como archivo local no se toca la URL.
   const setRoute = (id) => {
     if (location.protocol === 'file:') return;
     history.replaceState(null, '', '/' + id);
@@ -793,7 +793,7 @@
   /* ---------- Inicio ---------- */
   const saved = store.get('lang');
   setLang(saved || ((navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en'));
-  // Enlaces antiguos con # (eyverqt.netlify.app/#plisto) pasan a la ruta limpia
+  // Enlaces antiguos con # (eyverqt.github.io/#plisto) pasan a la ruta limpia
   const start = location.hash ? location.hash.slice(1) : routeId();
   if (start) { openById(start); if (location.hash) setRoute(document.getElementById(start)?.classList.contains('item') ? start : ''); }
 })();

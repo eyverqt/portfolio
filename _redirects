@@ -1,25 +1,5 @@
-# URLs limpias: cada sección es una ruta (eyverqt.netlify.app/plisto) que sirve la misma página
-/agoge  /index.html  200
-/crawlphantom  /index.html  200
-/plisto  /index.html  200
-/verba  /tiro  301
-/verba/app  /tiro/app/  301
-/verba/app/*  /tiro/app/:splat  301
-/tiro  /index.html  200
-/talaria  /index.html  200
-/histia  /index.html  200
-/aldo  /index.html  200
-/forja  /index.html  200
-/forja/app  /forja/app/  301
-/forja/app/*  /forja/app/index.html  200
-/tiro/app/transcribir  /tiro/app/index.html  200
-/tiro/app/biblioteca  /tiro/app/index.html  200
-/tiro/app/preguntar  /tiro/app/index.html  200
-/tiro/app/crear  /tiro/app/index.html  200
-/tiro/app/ajustes  /tiro/app/index.html  200
-/about  /index.html  200
-/experience  /index.html  200
-/education  /index.html  200
-/skills  /index.html  200
-/certificates  /index.html  200
-/contact  /index.html  200
+# El portfolio vive en GitHub Pages y Hefesto en Firebase Hosting.
+/forja/app/*  https://hefestopro.web.app/:splat  301!
+/forja/app    https://hefestopro.web.app/        301!
+/forja        https://eyverqt.github.io/hefesto  301!
+/*            https://eyverqt.github.io/:splat   301!
