@@ -4,7 +4,7 @@
    · Fuentes de Google: caché primero (la app se ve igual sin red).
    Los datos van por Firestore, que guarda en el dispositivo lo que se
    registra sin conexión y lo sube solo al volver la red. */
-const CACHE = 'forja-v4';
+const CACHE = 'forja-v5';
 const FUENTES = 'forja-fuentes-v1';
 const BASE = new URL('./', self.location).pathname;
 
