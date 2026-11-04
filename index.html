@@ -412,12 +412,11 @@
       </button>
       <div class="panel" id="p-forja"><div class="inner"><div class="body">
         <div class="slider"><div class="track">
-          <div class="slide"><img src="assets/forja-hub.jpg" alt="Panel del entrenador con sus asesorados, cobros y solicitudes" loading="lazy" decoding="async"></div>
-          <div class="slide"><img src="assets/forja-movil.jpg" alt="Forja en el móvil con la barra flotante" loading="lazy" decoding="async"></div>
+          <div class="slide"><img src="assets/forja-hub.jpg" alt="Panel del entrenador de Forja con sus atletas programados" loading="lazy" decoding="async"></div>
         </div></div>
         <div class="text">
-          <p class="es"><strong>App web · Coaching de fuerza y nutrición.</strong> El entrenador invita a cada asesorado por correo con su plan (entrenamiento, nutrición o premium), programa sus semanas y publica las nuevas cuando quiere; el asesorado registra series, RPE, comidas y peso, y el entrenador lo ve al momento. <strong>Novedades 2.1:</strong> marca del club con logo, cobros con recordatorios y contabilidad del mes, importación de los libros de Excel del club y modo sin conexión: lo registrado se guarda en el móvil y se sube solo al volver la red.</p>
-          <p class="en"><strong>Web app · Strength and nutrition coaching.</strong> The coach invites each client by email with their plan (training, nutrition or premium), programs their weeks and publishes new ones when ready; the client logs sets, RPE, meals and bodyweight, and the coach sees it instantly. <strong>New in 2.1:</strong> club branding with logo, payment reminders and monthly accounting, import from the club's Excel workbooks, and offline mode: everything logged stays on the phone and uploads as soon as it reconnects.</p>
+          <p class="es"><strong>App web · Coaching de fuerza y nutrición.</strong> El entrenador programa a cada atleta desde el primer día, con correo o sin él, y le da acceso en cuanto se registra; el asesorado registra series, RPE, comidas y peso, y el entrenador lo ve al momento. <strong>Novedades 2.2:</strong> series escritas en una línea (3x5 75% @8), bloques y fichas que se importan y exportan en texto o JSON, carpetas de atletas, cobros con recordatorios y modo sin conexión.</p>
+          <p class="en"><strong>Web app · Strength and nutrition coaching.</strong> The coach programs each athlete from day one, with or without an email, and grants access as soon as they sign up; the client logs sets, RPE, meals and bodyweight, and the coach sees it instantly. <strong>New in 2.2:</strong> sets written in one line (3x5 75% @8), blocks and profiles imported and exported as text or JSON, athlete folders, payment reminders and offline mode.</p>
           <div class="chips"><span>JavaScript</span><span>Vite</span><span>Firebase</span><span>Firestore</span><span>PWA</span></div>
         </div>
         <div class="links">
@@ -714,6 +713,7 @@
     nav.className = 'nav-btns';
     nav.innerHTML = '<button type="button" aria-label="Anterior">‹</button><span class="count"></span><button type="button" aria-label="Siguiente">›</button>';
     slider.appendChild(nav);
+    if (slides.length < 2) nav.style.display = 'none';
     const count = nav.querySelector('.count');
     const current = () => Math.round(track.scrollLeft / track.clientWidth);
     const go = i => track.scrollTo({ left: ((i + slides.length) % slides.length) * track.clientWidth });
